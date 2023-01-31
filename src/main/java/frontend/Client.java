@@ -5,6 +5,13 @@
  */
 package frontend;
 
+import java.util.ArrayList;
+import backend.Inventory;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import java.util.HashMap;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author tomsm
@@ -14,8 +21,16 @@ public class Client extends javax.swing.JFrame {
     /**
      * Creates new form Client
      */
+    
+    Inventory inv = null;
+    DefaultTableModel inventoryModel;
+    
+    
     public Client() {
         initComponents();
+//        handler = new Handler();
+        inv = new Inventory();
+        inventoryModel = (DefaultTableModel) jTable1.getModel();
     }
 
     /**
@@ -513,10 +528,12 @@ public class Client extends javax.swing.JFrame {
 
     private void updateInventoryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateInventoryButtonActionPerformed
         // TODO add your handling code here:
-        // Send a request to the database and update the table in the following
-        
-        
-        
+        // Send a request to the database and update the table in the following      
+        ArrayList<HashMap<String, String>> data = inv.getAllInventory();
+        for (int i = 0; i < data.size(); i++) {
+            HashMap<String, String> c = data.get(i);
+            inventoryModel.addRow(new Object[]{i, c.get("name"), c.get("qty"), c.get("date")});
+        };
         
     }//GEN-LAST:event_updateInventoryButtonActionPerformed
 
