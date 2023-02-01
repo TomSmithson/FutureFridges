@@ -484,6 +484,8 @@ public class Client extends javax.swing.JFrame {
             tabbedPane.setSelectedIndex(3);
         }
         
+        
+        
     }//GEN-LAST:event_loginButtonActionPerformed
 
     private void doorStatusButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doorStatusButton1ActionPerformed
