@@ -7,8 +7,7 @@ package frontend;
 
 import java.util.ArrayList;
 import backend.Inventory;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import backend.Employee;
 import java.util.HashMap;
 import javax.swing.table.DefaultTableModel;
 
@@ -23,14 +22,20 @@ public class Client extends javax.swing.JFrame {
      */
     
     Inventory inv = null;
+    Employee emp  = null;
+    
     DefaultTableModel inventoryModel;
+    DefaultTableModel employeeModel;
     
     
     public Client() {
         initComponents();
 //        handler = new Handler();
         inv = new Inventory();
-        inventoryModel = (DefaultTableModel) jTable1.getModel();
+        inventoryModel = (DefaultTableModel) inventoryTable.getModel();
+        emp = new Employee();
+        employeeModel = (DefaultTableModel) employeeTable.getModel();
+        
     }
 
     /**
@@ -69,12 +74,13 @@ public class Client extends javax.swing.JFrame {
         inventoryPanel = new javax.swing.JPanel();
         backButton2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        inventoryTable = new javax.swing.JTable();
         updateInventoryButton = new javax.swing.JButton();
         employeePanel = new javax.swing.JPanel();
         backButton3 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        employeeTable = new javax.swing.JTable();
+        updateEmployeeButton = new javax.swing.JButton();
         notificationsPanel = new javax.swing.JPanel();
         backButton1 = new javax.swing.JButton();
 
@@ -298,7 +304,7 @@ public class Client extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        inventoryTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -321,7 +327,7 @@ public class Client extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(inventoryTable);
 
         updateInventoryButton.setText("Update");
         updateInventoryButton.addActionListener(new java.awt.event.ActionListener() {
@@ -366,15 +372,30 @@ public class Client extends javax.swing.JFrame {
             }
         });
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        employeeTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "ID", "Name", "Role"
+                "ID", "Name", "Role", "Date"
             }
-        ));
-        jScrollPane2.setViewportView(jTable2);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, true, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(employeeTable);
+
+        updateEmployeeButton.setText("Update");
+        updateEmployeeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateEmployeeButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout employeePanelLayout = new javax.swing.GroupLayout(employeePanel);
         employeePanel.setLayout(employeePanelLayout);
@@ -383,10 +404,12 @@ public class Client extends javax.swing.JFrame {
             .addGroup(employeePanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(employeePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, employeePanelLayout.createSequentialGroup()
-                        .addGap(0, 697, Short.MAX_VALUE)
-                        .addComponent(backButton3))
-                    .addComponent(jScrollPane2))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(employeePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(backButton3, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(updateEmployeeButton, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addContainerGap())
         );
         employeePanelLayout.setVerticalGroup(
@@ -394,7 +417,9 @@ public class Client extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, employeePanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(updateEmployeeButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addComponent(backButton3)
                 .addContainerGap())
         );
@@ -535,9 +560,18 @@ public class Client extends javax.swing.JFrame {
         for (int i = 0; i < data.size(); i++) {
             HashMap<String, String> c = data.get(i);
             inventoryModel.addRow(new Object[]{i, c.get("name"), c.get("qty"), c.get("date")});
-        };
+        }
         
     }//GEN-LAST:event_updateInventoryButtonActionPerformed
+
+    private void updateEmployeeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateEmployeeButtonActionPerformed
+        // TODO add your handling code here:
+        ArrayList<HashMap<String, String>> data = emp.getAllEmployee();
+        for (int i = 0; i < data.size(); i++) {
+            HashMap<String, String> c = data.get(i);
+            employeeModel.addRow(new Object[]{i, c.get("name"), c.get("role"), c.get("date")});
+        }
+    }//GEN-LAST:event_updateEmployeeButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -586,14 +620,14 @@ public class Client extends javax.swing.JFrame {
     private javax.swing.JPanel doorStatusPanel;
     private javax.swing.JButton employeeButton1;
     private javax.swing.JPanel employeePanel;
+    private javax.swing.JTable employeeTable;
     private javax.swing.JPanel home;
     private javax.swing.JButton inventoryButton1;
     private javax.swing.JPanel inventoryPanel;
+    private javax.swing.JTable inventoryTable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
     private javax.swing.JButton loginButton;
     private javax.swing.JButton notificationButton1;
     private javax.swing.JPanel notificationsPanel;
@@ -605,6 +639,7 @@ public class Client extends javax.swing.JFrame {
     private javax.swing.JButton restaurantStaffButton;
     private javax.swing.JTabbedPane restaurantTabs;
     private javax.swing.JTabbedPane tabbedPane;
+    private javax.swing.JButton updateEmployeeButton;
     private javax.swing.JButton updateInventoryButton;
     private javax.swing.JLabel userSelectionInfo;
     private javax.swing.JPanel userSelectionPanel;
