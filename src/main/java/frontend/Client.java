@@ -8,6 +8,7 @@ package frontend;
 import java.util.ArrayList;
 import backend.Inventory;
 import backend.Employee;
+import backend.User;
 import java.util.HashMap;
 import javax.swing.table.DefaultTableModel;
 
@@ -23,6 +24,7 @@ public class Client extends javax.swing.JFrame {
     
     Inventory inv = null;
     Employee emp  = null;
+    User usr = null;
     
     DefaultTableModel inventoryModel;
     DefaultTableModel employeeModel;
@@ -35,6 +37,7 @@ public class Client extends javax.swing.JFrame {
         inventoryModel = (DefaultTableModel) inventoryTable.getModel();
         emp = new Employee();
         employeeModel = (DefaultTableModel) employeeTable.getModel();
+        usr = new User();
         
     }
 
@@ -502,12 +505,21 @@ public class Client extends javax.swing.JFrame {
         String username = usernameInput.getText().toString();
         String password = passwordInput.getText().toString();
         
+        // Connect to database and check details against the user
+        
         System.out.println(username);
         System.out.println(password);
         
-        if (username.equals("test") & password.equals("test")) {
+        if (usr.login(username, password).equals("authenticated")) {
+            System.out.println("Successful login");
             tabbedPane.setSelectedIndex(3);
+        } else {
+            System.out.println("Incorrect username/password");
         }
+        
+//        if (username.equals("test") & password.equals("test")) {
+//            tabbedPane.setSelectedIndex(3);
+//        }
         
         
         
