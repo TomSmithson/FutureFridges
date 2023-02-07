@@ -15,6 +15,7 @@ import com.mongodb.client.MongoCollection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import backend.DatabaseHandler;
+import com.mongodb.client.result.InsertOneResult;
 
 public class Employee {
     DatabaseHandler handler = null;
@@ -36,4 +37,12 @@ public class Employee {
         });
         return results;
     }
+    
+//    public String createNewUser(String username, String password) {
+//        collection = handler.connectToEmployee();
+//        Document apples = new Document("username", username).append("password", password);
+//        InsertOneResult result = collection.insertOne(apples);
+//        System.out.println("Inserted a document with the following id: " + result.getInsertedId().asObjectId().getValue());
+//        return "Successfully created a new user with id: " + result.getInsertedId().asObjectId().getValue();
+//    }
 }
