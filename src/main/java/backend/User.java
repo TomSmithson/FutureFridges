@@ -66,10 +66,24 @@ public class User {
     }
     
     public String createNewUser(String username, String password, String role) {
+        String date = java.time.LocalDate.now().toString();
         collection = handler.connectToUser();
-        Document apples = new Document("username", username).append("password", password).append("role", role);
-        InsertOneResult result = collection.insertOne(apples);
+        Document user = new Document("username", username).append("password", password).append("role", role).append("date", date);
+        InsertOneResult result = collection.insertOne(user);
         return "Successfully created a new user with id: " + result.getInsertedId().asObjectId().getValue();
+    }
+    
+    public ArrayList<HashMap<String, String>> getAllUsers() {
+        ArrayList<HashMap<String, String>> results = new ArrayList<>();
+        collection = handler.connectToUser();
+        collection.find().forEach(doc -> {
+            HashMap<String, String> a = new HashMap<>();
+            a.put("name", doc.get("username").toString());
+            a.put("role", doc.get("role").toString());
+            a.put("date", doc.get("date").toString());
+            results.add(a);
+        });
+        return results;
     }
     
     

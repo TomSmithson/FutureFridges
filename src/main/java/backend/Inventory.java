@@ -16,7 +16,11 @@ import com.mongodb.client.MongoCollection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import backend.DatabaseHandler;
-
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import static java.time.temporal.ChronoUnit.DAYS;
 
 public class Inventory {
     
@@ -33,12 +37,21 @@ public class Inventory {
         collection = handler.connectToInventory();
         
         collection.find().forEach(doc -> {
-           HashMap<String, String> a = new HashMap<>();
-           a.put("name", doc.get("name").toString());
-           a.put("qty", doc.get("qty").toString());
-           a.put("date", doc.get("date").toString());
-           results.add(a);
+            HashMap<String, String> a = new HashMap<>();
+            a.put("name", doc.get("name").toString());
+            a.put("qty", doc.get("qty").toString());
+            a.put("date", doc.get("date").toString());
+                       
+            DateTimeFormatter df = new DateTimeFormatterBuilder().parseCaseInsensitive().appendPattern("dd/MM/yy").toFormatter();
+            LocalDate date = LocalDate.parse(doc.get("date").toString(), df);
+            LocalDate now = LocalDate.now();           
+            long days = DAYS.between(date, now);
+           
+            a.put("expiryDays", Long.toString(days));
+           
+            results.add(a);
         });
+        
         return results;
     }
 }

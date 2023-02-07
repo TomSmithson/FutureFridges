@@ -40,6 +40,7 @@ public class Client extends javax.swing.JFrame {
         emp = new Employee();
         employeeModel = (DefaultTableModel) employeeTable.getModel();
         usr = new User();
+        doorStatusLabel.setText("The door is currently: closed");
         
     }
 
@@ -76,6 +77,7 @@ public class Client extends javax.swing.JFrame {
         notificationButton1 = new javax.swing.JButton();
         doorStatusPanel = new javax.swing.JPanel();
         backButton = new javax.swing.JButton();
+        doorStatusLabel = new javax.swing.JLabel();
         inventoryPanel = new javax.swing.JPanel();
         backButton2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -294,19 +296,27 @@ public class Client extends javax.swing.JFrame {
             }
         });
 
+        doorStatusLabel.setText("The door is currently: ");
+
         javax.swing.GroupLayout doorStatusPanelLayout = new javax.swing.GroupLayout(doorStatusPanel);
         doorStatusPanel.setLayout(doorStatusPanelLayout);
         doorStatusPanelLayout.setHorizontalGroup(
             doorStatusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, doorStatusPanelLayout.createSequentialGroup()
-                .addContainerGap(712, Short.MAX_VALUE)
+                .addContainerGap(721, Short.MAX_VALUE)
                 .addComponent(backButton)
                 .addContainerGap())
+            .addGroup(doorStatusPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(doorStatusLabel)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         doorStatusPanelLayout.setVerticalGroup(
             doorStatusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, doorStatusPanelLayout.createSequentialGroup()
-                .addContainerGap(440, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(doorStatusLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 430, Short.MAX_VALUE)
                 .addComponent(backButton)
                 .addContainerGap())
         );
@@ -440,7 +450,7 @@ public class Client extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        restaurantTabs.addTab("Employees", employeePanel);
+        restaurantTabs.addTab("Users", employeePanel);
 
         backButton1.setText("Back");
         backButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -676,7 +686,7 @@ public class Client extends javax.swing.JFrame {
     private void updateEmployeeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateEmployeeButtonActionPerformed
         // TODO add your handling code here:
         employeeModel.setRowCount(0);
-        ArrayList<HashMap<String, String>> data = emp.getAllEmployee();
+        ArrayList<HashMap<String, String>> data = usr.getAllUsers();
         for (int i = 0; i < data.size(); i++) {
             HashMap<String, String> c = data.get(i);
             employeeModel.addRow(new Object[]{i, c.get("name"), c.get("role"), c.get("date")});
@@ -750,6 +760,7 @@ public class Client extends javax.swing.JFrame {
     private javax.swing.JPanel deliveryLoginPanel;
     private javax.swing.JButton deliveryStaffButton;
     private javax.swing.JButton doorStatusButton1;
+    private javax.swing.JLabel doorStatusLabel;
     private javax.swing.JPanel doorStatusPanel;
     private javax.swing.JButton employeeButton1;
     private javax.swing.JPanel employeePanel;
