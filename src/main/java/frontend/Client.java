@@ -663,7 +663,8 @@ public class Client extends javax.swing.JFrame {
 
     private void updateInventoryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateInventoryButtonActionPerformed
         // TODO add your handling code here:
-        // Send a request to the database and update the table in the following      
+        // Send a request to the database and update the table in the following
+        inventoryModel.setRowCount(0);
         ArrayList<HashMap<String, String>> data = inv.getAllInventory();
         for (int i = 0; i < data.size(); i++) {
             HashMap<String, String> c = data.get(i);
@@ -674,6 +675,7 @@ public class Client extends javax.swing.JFrame {
 
     private void updateEmployeeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateEmployeeButtonActionPerformed
         // TODO add your handling code here:
+        employeeModel.setRowCount(0);
         ArrayList<HashMap<String, String>> data = emp.getAllEmployee();
         for (int i = 0; i < data.size(); i++) {
             HashMap<String, String> c = data.get(i);
