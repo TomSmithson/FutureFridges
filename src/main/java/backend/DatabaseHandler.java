@@ -66,5 +66,9 @@ public class DatabaseHandler {
     
     public MongoCollection<Document> connectToUser() {
         return database.getCollection("users");
-    }   
+    }
+    
+    public MongoCollection<Document> connectToDelivery() {
+        return database.getCollection("delivery");
+    }
 }

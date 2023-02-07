@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import backend.Inventory;
 import backend.Employee;
 import backend.User;
+import backend.Delivery;
 import java.util.HashMap;
 import javax.swing.table.DefaultTableModel;
 
@@ -24,6 +25,7 @@ public class Client extends javax.swing.JFrame {
     
     Inventory inv = null;
     Employee emp  = null;
+    Delivery del = null;
     User usr = null;
     
     DefaultTableModel inventoryModel;
@@ -40,6 +42,8 @@ public class Client extends javax.swing.JFrame {
         emp = new Employee();
         employeeModel = (DefaultTableModel) employeeTable.getModel();
         usr = new User();
+        del = new Delivery();
+        
         doorStatusLabel.setText("The door is currently: closed");
         
     }
@@ -53,6 +57,7 @@ public class Client extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenu1 = new javax.swing.JMenu();
         tabbedPane = new javax.swing.JTabbedPane();
         userSelectionPanel = new javax.swing.JPanel();
         userSelectionTitle = new javax.swing.JLabel();
@@ -67,6 +72,10 @@ public class Client extends javax.swing.JFrame {
         loginButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         deliveryLoginPanel = new javax.swing.JPanel();
+        deliveryLoginTitle = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        authCodeInput = new javax.swing.JTextField();
+        authCodeButton = new javax.swing.JButton();
         restaurantPanel = new javax.swing.JPanel();
         restaurantTabs = new javax.swing.JTabbedPane();
         home = new javax.swing.JPanel();
@@ -101,6 +110,14 @@ public class Client extends javax.swing.JFrame {
         createNewUserStatus = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         newUserRoleInput = new javax.swing.JTextField();
+        jPanel1 = new javax.swing.JPanel();
+        deliveryTabbedPane = new javax.swing.JTabbedPane();
+        itemsToInsertPanel = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        itemsToInsertTable = new javax.swing.JTable();
+        submitDeliveryButton = new javax.swing.JButton();
+
+        jMenu1.setText("jMenu1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -211,15 +228,44 @@ public class Client extends javax.swing.JFrame {
 
         tabbedPane.addTab("Restaurant Login", restaurantLoginPanel);
 
+        deliveryLoginTitle.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        deliveryLoginTitle.setText("Delivery Login");
+
+        jLabel5.setText("Please enter your authorisation code below:");
+
+        authCodeButton.setText("Submit");
+        authCodeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                authCodeButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout deliveryLoginPanelLayout = new javax.swing.GroupLayout(deliveryLoginPanel);
         deliveryLoginPanel.setLayout(deliveryLoginPanelLayout);
         deliveryLoginPanelLayout.setHorizontalGroup(
             deliveryLoginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 837, Short.MAX_VALUE)
+            .addGroup(deliveryLoginPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(deliveryLoginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(authCodeButton)
+                    .addGroup(deliveryLoginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(deliveryLoginTitle)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(authCodeInput)))
+                .addContainerGap(573, Short.MAX_VALUE))
         );
         deliveryLoginPanelLayout.setVerticalGroup(
             deliveryLoginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 534, Short.MAX_VALUE)
+            .addGroup(deliveryLoginPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(deliveryLoginTitle)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(authCodeInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(authCodeButton)
+                .addContainerGap(423, Short.MAX_VALUE))
         );
 
         tabbedPane.addTab("Delivery Login", deliveryLoginPanel);
@@ -579,6 +625,69 @@ public class Client extends javax.swing.JFrame {
 
         tabbedPane.addTab("Restaurant Page", restaurantPanel);
 
+        deliveryTabbedPane.setName(""); // NOI18N
+
+        itemsToInsertTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Name", "Quantity", "Inserted"
+            }
+        ));
+        jScrollPane3.setViewportView(itemsToInsertTable);
+
+        submitDeliveryButton.setText("Submit Delivery");
+        submitDeliveryButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submitDeliveryButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout itemsToInsertPanelLayout = new javax.swing.GroupLayout(itemsToInsertPanel);
+        itemsToInsertPanel.setLayout(itemsToInsertPanelLayout);
+        itemsToInsertPanelLayout.setHorizontalGroup(
+            itemsToInsertPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(itemsToInsertPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(itemsToInsertPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 784, Short.MAX_VALUE)
+                    .addGroup(itemsToInsertPanelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(submitDeliveryButton, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        itemsToInsertPanelLayout.setVerticalGroup(
+            itemsToInsertPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(itemsToInsertPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(submitDeliveryButton)
+                .addContainerGap(50, Short.MAX_VALUE))
+        );
+
+        deliveryTabbedPane.addTab("Items to Insert", itemsToInsertPanel);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(deliveryTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 813, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(deliveryTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 527, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        tabbedPane.addTab("Delivery Page", jPanel1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -678,7 +787,7 @@ public class Client extends javax.swing.JFrame {
         ArrayList<HashMap<String, String>> data = inv.getAllInventory();
         for (int i = 0; i < data.size(); i++) {
             HashMap<String, String> c = data.get(i);
-            inventoryModel.addRow(new Object[]{i, c.get("name"), c.get("qty"), c.get("date")});
+            inventoryModel.addRow(new Object[]{i, c.get("name"), c.get("qty"), c.get("date"), c.get("expiryDays")});
         }
         
     }//GEN-LAST:event_updateInventoryButtonActionPerformed
@@ -712,6 +821,31 @@ public class Client extends javax.swing.JFrame {
     private void newUserRoleInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newUserRoleInputActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_newUserRoleInputActionPerformed
+
+    private void authCodeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_authCodeButtonActionPerformed
+        // TODO add your handling code here:
+        String authCode = authCodeInput.getText();
+        
+        ArrayList<HashMap<String, String>> authCodeMap = del.getAllAuthCodes();
+        for (int i = 0; i < authCodeMap.size(); i++) {
+            HashMap<String, String> c = authCodeMap.get(i);
+            if (authCode.equals(c.get("authCode"))) {
+                System.out.println("Successfully authenticated as delivery personnel");
+                tabbedPane.setSelectedIndex(4);
+            }
+        }
+        
+    }//GEN-LAST:event_authCodeButtonActionPerformed
+
+    private void submitDeliveryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitDeliveryButtonActionPerformed
+        // TODO add your handling code here:
+        
+        // Iterate through each item in the table and check that the column has a y it in that the item has been inserted.
+        
+        // If not add it to the chefs notifications
+        
+        
+    }//GEN-LAST:event_submitDeliveryButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -750,6 +884,8 @@ public class Client extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton authCodeButton;
+    private javax.swing.JTextField authCodeInput;
     private javax.swing.JButton backButton;
     private javax.swing.JButton backButton1;
     private javax.swing.JButton backButton2;
@@ -758,7 +894,9 @@ public class Client extends javax.swing.JFrame {
     private javax.swing.JLabel createNewUserLabel;
     private javax.swing.JLabel createNewUserStatus;
     private javax.swing.JPanel deliveryLoginPanel;
+    private javax.swing.JLabel deliveryLoginTitle;
     private javax.swing.JButton deliveryStaffButton;
+    private javax.swing.JTabbedPane deliveryTabbedPane;
     private javax.swing.JButton doorStatusButton1;
     private javax.swing.JLabel doorStatusLabel;
     private javax.swing.JPanel doorStatusPanel;
@@ -771,12 +909,18 @@ public class Client extends javax.swing.JFrame {
     private javax.swing.JButton inventoryButton1;
     private javax.swing.JPanel inventoryPanel;
     private javax.swing.JTable inventoryTable;
+    private javax.swing.JPanel itemsToInsertPanel;
+    private javax.swing.JTable itemsToInsertTable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JButton loginButton;
     private javax.swing.JTextField newUserNameInput;
     private javax.swing.JTextField newUserPasswordInput;
@@ -790,6 +934,7 @@ public class Client extends javax.swing.JFrame {
     private javax.swing.JPanel restaurantPanel;
     private javax.swing.JButton restaurantStaffButton;
     private javax.swing.JTabbedPane restaurantTabs;
+    private javax.swing.JButton submitDeliveryButton;
     private javax.swing.JTabbedPane tabbedPane;
     private javax.swing.JButton updateEmployeeButton;
     private javax.swing.JButton updateInventoryButton;
