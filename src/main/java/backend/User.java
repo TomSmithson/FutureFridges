@@ -37,13 +37,9 @@ public class User {
     MongoCollection<Document> collection = null;
     Bson filter = null;
     
-    public static void main(String[] args) {
-        User usr = new User();
-    }
-    
+
     public User() {
         handler = new DatabaseHandler();
-        System.out.println(currentUserIsHeadChef("Tom", "Head Chef"));
     }
     
     public String login(String username, String password) {
@@ -53,20 +49,19 @@ public class User {
         collection = handler.connectToUser();
         filter = Filters.and(Filters.eq("username", username), Filters.eq("password", password));
         collection.find(filter).forEach(doc -> {
-            System.out.println(doc);
             wrapper.set("authenticated");
         });
         return wrapper.get();
     }
     
-    public String currentUserIsHeadChef(String username, String role) {
+    public String currentUserIsHeadChef(String username) {
         AtomicReference<String> wrapper = new AtomicReference<>("");
         collection = handler.connectToUser();
-        filter = Filters.and(Filters.eq("username", username), Filters.eq("role", role));
+        filter = Filters.and(Filters.eq("username", username), Filters.eq("role", "Head Chef"));
         collection.find(filter).forEach(doc -> {
-            System.out.println(doc);
             wrapper.set("true");
         });
+        System.out.println("");
         return wrapper.get();
     }
     
@@ -74,7 +69,6 @@ public class User {
         collection = handler.connectToUser();
         Document apples = new Document("username", username).append("password", password).append("role", role);
         InsertOneResult result = collection.insertOne(apples);
-        System.out.println("Inserted a document with the following id: " + result.getInsertedId().asObjectId().getValue());
         return "Successfully created a new user with id: " + result.getInsertedId().asObjectId().getValue();
     }
     

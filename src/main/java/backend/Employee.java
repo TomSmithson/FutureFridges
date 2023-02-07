@@ -38,11 +38,5 @@ public class Employee {
         return results;
     }
     
-//    public String createNewUser(String username, String password) {
-//        collection = handler.connectToEmployee();
-//        Document apples = new Document("username", username).append("password", password);
-//        InsertOneResult result = collection.insertOne(apples);
-//        System.out.println("Inserted a document with the following id: " + result.getInsertedId().asObjectId().getValue());
-//        return "Successfully created a new user with id: " + result.getInsertedId().asObjectId().getValue();
-//    }
+
 }
