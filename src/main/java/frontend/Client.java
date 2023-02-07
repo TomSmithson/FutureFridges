@@ -29,6 +29,8 @@ public class Client extends javax.swing.JFrame {
     DefaultTableModel inventoryModel;
     DefaultTableModel employeeModel;
     
+    String currentUser = "";
+    
     
     public Client() {
         initComponents();
@@ -86,6 +88,17 @@ public class Client extends javax.swing.JFrame {
         updateEmployeeButton = new javax.swing.JButton();
         notificationsPanel = new javax.swing.JPanel();
         backButton1 = new javax.swing.JButton();
+        headChefPanel = new javax.swing.JPanel();
+        haedChefAdminTitle = new javax.swing.JLabel();
+        createNewUserLabel = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        newUserNameInput = new javax.swing.JTextField();
+        newUserPasswordInput = new javax.swing.JTextField();
+        createNewUserButton = new javax.swing.JButton();
+        createNewUserStatus = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        newUserRoleInput = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -455,6 +468,88 @@ public class Client extends javax.swing.JFrame {
 
         restaurantTabs.addTab("Notifications", notificationsPanel);
 
+        haedChefAdminTitle.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        haedChefAdminTitle.setText("Head Chef Admin Page");
+
+        createNewUserLabel.setText("Create New User");
+
+        jLabel2.setText("Username:");
+
+        jLabel3.setText("Password:");
+
+        createNewUserButton.setText("Submit");
+        createNewUserButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                createNewUserButtonActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("Role");
+
+        newUserRoleInput.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newUserRoleInputActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout headChefPanelLayout = new javax.swing.GroupLayout(headChefPanel);
+        headChefPanel.setLayout(headChefPanelLayout);
+        headChefPanelLayout.setHorizontalGroup(
+            headChefPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(headChefPanelLayout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addGroup(headChefPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(headChefPanelLayout.createSequentialGroup()
+                        .addComponent(createNewUserStatus)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(createNewUserButton))
+                    .addGroup(headChefPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(newUserNameInput, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(createNewUserLabel)
+                    .addComponent(haedChefAdminTitle)
+                    .addGroup(headChefPanelLayout.createSequentialGroup()
+                        .addGroup(headChefPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
+                        .addGap(18, 18, 18)
+                        .addGroup(headChefPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(newUserPasswordInput)
+                            .addComponent(newUserRoleInput))))
+                .addContainerGap(512, Short.MAX_VALUE))
+        );
+        headChefPanelLayout.setVerticalGroup(
+            headChefPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(headChefPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(haedChefAdminTitle)
+                .addGap(18, 18, 18)
+                .addComponent(createNewUserLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(headChefPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(newUserNameInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(headChefPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(newUserPasswordInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(headChefPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(headChefPanelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(headChefPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(newUserRoleInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(24, 24, 24)
+                        .addComponent(createNewUserStatus))
+                    .addGroup(headChefPanelLayout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addComponent(createNewUserButton)))
+                .addContainerGap(305, Short.MAX_VALUE))
+        );
+
+        restaurantTabs.addTab("Head Chef Admin", headChefPanel);
+
         javax.swing.GroupLayout restaurantPanelLayout = new javax.swing.GroupLayout(restaurantPanel);
         restaurantPanel.setLayout(restaurantPanelLayout);
         restaurantPanelLayout.setHorizontalGroup(
@@ -512,6 +607,7 @@ public class Client extends javax.swing.JFrame {
         
         if (usr.login(username, password).equals("authenticated")) {
             System.out.println("Successful login");
+            currentUser = username;
             tabbedPane.setSelectedIndex(3);
         } else {
             System.out.println("Incorrect username/password");
@@ -585,6 +681,29 @@ public class Client extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_updateEmployeeButtonActionPerformed
 
+    private void createNewUserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createNewUserButtonActionPerformed
+        // TODO add your handling code here:
+        String username = newUserNameInput.getText();
+        String password = newUserPasswordInput.getText();
+        String role = newUserRoleInput.getText();
+        
+        // Make sure the head chef is currently logged in first
+        System.out.println(usr.currentUserIsHeadChef(username, role));
+        
+        if (usr.currentUserIsHeadChef(username, role).equals("true")) {
+            String result = usr.createNewUser(username, password, role);
+            createNewUserStatus.setText(result);
+        } else {
+            createNewUserStatus.setText("Current user is not a head chef, so cannot create new users");
+        }
+        
+        
+    }//GEN-LAST:event_createNewUserButtonActionPerformed
+
+    private void newUserRoleInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newUserRoleInputActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_newUserRoleInputActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -626,6 +745,9 @@ public class Client extends javax.swing.JFrame {
     private javax.swing.JButton backButton1;
     private javax.swing.JButton backButton2;
     private javax.swing.JButton backButton3;
+    private javax.swing.JButton createNewUserButton;
+    private javax.swing.JLabel createNewUserLabel;
+    private javax.swing.JLabel createNewUserStatus;
     private javax.swing.JPanel deliveryLoginPanel;
     private javax.swing.JButton deliveryStaffButton;
     private javax.swing.JButton doorStatusButton1;
@@ -633,14 +755,22 @@ public class Client extends javax.swing.JFrame {
     private javax.swing.JButton employeeButton1;
     private javax.swing.JPanel employeePanel;
     private javax.swing.JTable employeeTable;
+    private javax.swing.JLabel haedChefAdminTitle;
+    private javax.swing.JPanel headChefPanel;
     private javax.swing.JPanel home;
     private javax.swing.JButton inventoryButton1;
     private javax.swing.JPanel inventoryPanel;
     private javax.swing.JTable inventoryTable;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton loginButton;
+    private javax.swing.JTextField newUserNameInput;
+    private javax.swing.JTextField newUserPasswordInput;
+    private javax.swing.JTextField newUserRoleInput;
     private javax.swing.JButton notificationButton1;
     private javax.swing.JPanel notificationsPanel;
     private javax.swing.JTextField passwordInput;
