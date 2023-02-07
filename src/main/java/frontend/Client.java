@@ -686,11 +686,8 @@ public class Client extends javax.swing.JFrame {
         String username = newUserNameInput.getText();
         String password = newUserPasswordInput.getText();
         String role = newUserRoleInput.getText();
-        
-        // Make sure the head chef is currently logged in first
-        System.out.println(usr.currentUserIsHeadChef(username, role));
-        
-        if (usr.currentUserIsHeadChef(username, role).equals("true")) {
+                
+        if (usr.currentUserIsHeadChef(currentUser).equals("true")) {
             String result = usr.createNewUser(username, password, role);
             createNewUserStatus.setText(result);
         } else {
