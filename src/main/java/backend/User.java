@@ -61,7 +61,16 @@ public class User {
         collection.find(filter).forEach(doc -> {
             wrapper.set("true");
         });
-        System.out.println("");
+        return wrapper.get();
+    }
+    
+    public String getCurrentUserRole(String username) {
+        AtomicReference<String> wrapper = new AtomicReference<>("");
+        collection = handler.connectToUser();
+        filter = Filters.eq("username", username);
+        collection.find(filter).forEach(doc -> {
+            wrapper.set(doc.get("role").toString());
+        });
         return wrapper.get();
     }
     

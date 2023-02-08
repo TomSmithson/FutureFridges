@@ -37,11 +37,11 @@ public class Client extends javax.swing.JFrame {
     
     
     String currentUser = "";
+    String currentUserRole = "";
     
     
     public Client() {
         initComponents();
-//        handler = new Handler();
         inv = new Inventory();
         inventoryModel = (DefaultTableModel) inventoryTable.getModel();
         usr = new User();
@@ -50,9 +50,7 @@ public class Client extends javax.swing.JFrame {
         deliveryItemsModel = (DefaultTableModel) itemsToInsertTable.getModel();
         not = new Notifications();
         notificationModel = (DefaultTableModel) notificationTable.getModel();
-        
-        doorStatusLabel.setText("The door is currently: closed");
-        
+        setSafeUi();
     }
 
     /**
@@ -78,6 +76,7 @@ public class Client extends javax.swing.JFrame {
         passwordInput = new javax.swing.JTextField();
         loginButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        restLoginStatus = new javax.swing.JLabel();
         deliveryLoginPanel = new javax.swing.JPanel();
         deliveryLoginTitle = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -91,6 +90,7 @@ public class Client extends javax.swing.JFrame {
         inventoryButton1 = new javax.swing.JButton();
         employeeButton1 = new javax.swing.JButton();
         notificationButton1 = new javax.swing.JButton();
+        restCurrentUserRoleStatus = new javax.swing.JLabel();
         doorStatusPanel = new javax.swing.JPanel();
         backButton = new javax.swing.JButton();
         doorStatusLabel = new javax.swing.JLabel();
@@ -220,7 +220,8 @@ public class Client extends javax.swing.JFrame {
                             .addGroup(restaurantLoginPanelLayout.createSequentialGroup()
                                 .addComponent(usernameLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(usernameInput, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(usernameInput, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(restLoginStatus)))
                 .addContainerGap(244, Short.MAX_VALUE))
         );
         restaurantLoginPanelLayout.setVerticalGroup(
@@ -238,7 +239,9 @@ public class Client extends javax.swing.JFrame {
                     .addComponent(passwordInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(loginButton)
-                .addContainerGap(417, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(restLoginStatus)
+                .addContainerGap(404, Short.MAX_VALUE))
         );
 
         tabbedPane.addTab("Restaurant Login", restaurantLoginPanel);
@@ -316,6 +319,8 @@ public class Client extends javax.swing.JFrame {
             }
         });
 
+        restCurrentUserRoleStatus.setText("You are currently logged in as a: ");
+
         javax.swing.GroupLayout homeLayout = new javax.swing.GroupLayout(home);
         home.setLayout(homeLayout);
         homeLayout.setHorizontalGroup(
@@ -324,14 +329,19 @@ public class Client extends javax.swing.JFrame {
                 .addComponent(restarauntLabel1)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(homeLayout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addComponent(doorStatusButton1)
-                .addGap(66, 66, 66)
-                .addComponent(inventoryButton1)
-                .addGap(69, 69, 69)
-                .addComponent(employeeButton1)
-                .addGap(58, 58, 58)
-                .addComponent(notificationButton1)
+                .addGroup(homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(homeLayout.createSequentialGroup()
+                        .addGap(43, 43, 43)
+                        .addComponent(doorStatusButton1)
+                        .addGap(66, 66, 66)
+                        .addComponent(inventoryButton1)
+                        .addGap(69, 69, 69)
+                        .addComponent(employeeButton1)
+                        .addGap(58, 58, 58)
+                        .addComponent(notificationButton1))
+                    .addGroup(homeLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(restCurrentUserRoleStatus)))
                 .addContainerGap(206, Short.MAX_VALUE))
         );
         homeLayout.setVerticalGroup(
@@ -345,7 +355,9 @@ public class Client extends javax.swing.JFrame {
                     .addComponent(inventoryButton1)
                     .addComponent(employeeButton1)
                     .addComponent(notificationButton1))
-                .addContainerGap(430, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(restCurrentUserRoleStatus)
+                .addContainerGap(396, Short.MAX_VALUE))
         );
 
         restaurantTabs.addTab("Home", home);
@@ -808,41 +820,35 @@ public class Client extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void restaurantStaffButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_restaurantStaffButtonActionPerformed
-        // TODO add your handling code here:
         System.out.println("Taking you to the restaurant staff login page");
         tabbedPane.setSelectedIndex(1);
     }//GEN-LAST:event_restaurantStaffButtonActionPerformed
 
     private void deliveryStaffButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deliveryStaffButtonActionPerformed
-        // TODO add your handling code here:
         System.out.println("Taking you to the delivery staff login page");
         tabbedPane.setSelectedIndex(2);
     }//GEN-LAST:event_deliveryStaffButtonActionPerformed
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
-        // TODO add your handling code here:
         String username = usernameInput.getText().toString();
         String password = passwordInput.getText().toString();
-        
-        // Connect to database and check details against the user
-        
-        System.out.println(username);
-        System.out.println(password);
-        
+
         if (usr.login(username, password).equals("authenticated")) {
             System.out.println("Successful login");
-            currentUser = username;
             tabbedPane.setSelectedIndex(3);
+            currentUser = username;
+            currentUserRole = usr.getCurrentUserRole(currentUser);
+            restCurrentUserRoleStatus.setText("You are currently logged in as: " + currentUserRole);
+            if (currentUserRole.equals("Head Chef")) {
+                setHeadChefUi();
+            } else if (currentUserRole.equals("Chef")) {
+                setChefUi();
+            } else {
+                setSafeUi();
+            }
         } else {
-            System.out.println("Incorrect username/password");
-        }
-        
-//        if (username.equals("test") & password.equals("test")) {
-//            tabbedPane.setSelectedIndex(3);
-//        }
-        
-        
-        
+            restLoginStatus.setText("Incorrect username/password");
+        }       
     }//GEN-LAST:event_loginButtonActionPerformed
 
     private void doorStatusButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doorStatusButton1ActionPerformed
@@ -939,6 +945,8 @@ public class Client extends javax.swing.JFrame {
                 tabbedPane.setSelectedIndex(4);
             }
         }
+        currentUserRole = "Delivery";
+        setDeliveryUi();
         
     }//GEN-LAST:event_authCodeButtonActionPerformed
 
@@ -1015,6 +1023,46 @@ public class Client extends javax.swing.JFrame {
         doorStatusLabel.setText("The door is currently: unlocked");
     }//GEN-LAST:event_doorUnlockButtonActionPerformed
 
+    private void setHeadChefUi() {
+        System.out.println("Head Chef UI");
+        tabbedPane.setEnabledAt(0, false);
+        tabbedPane.setEnabledAt(1, false);
+        tabbedPane.setEnabledAt(2, false);
+        tabbedPane.setEnabledAt(3, true);
+        tabbedPane.setEnabledAt(4, false);
+    }
+    
+    private void setChefUi() {
+        System.out.println("Chef UI");
+        tabbedPane.setEnabledAt(0, false);
+        tabbedPane.setEnabledAt(1, false);
+        tabbedPane.setEnabledAt(2, false);
+        tabbedPane.setEnabledAt(3, true);
+        tabbedPane.setEnabledAt(4, false);
+        restaurantTabs.setEnabledAt(0, true);
+        restaurantTabs.setEnabledAt(1, true);
+        restaurantTabs.setEnabledAt(2, true);
+        restaurantTabs.setEnabledAt(3, false);
+        restaurantTabs.setEnabledAt(4, false);
+        restaurantTabs.setEnabledAt(5, false);
+        
+    }
+    
+    private void setDeliveryUi() {
+        System.out.println("DeliveryUI");
+        tabbedPane.setEnabledAt(0, false);
+        tabbedPane.setEnabledAt(1, false);
+        tabbedPane.setEnabledAt(2, false);
+        tabbedPane.setEnabledAt(3, false);
+        tabbedPane.setEnabledAt(4, true);
+    }
+    
+    private void setSafeUi() {
+        System.out.println("Safe UI");
+        tabbedPane.setEnabledAt(3, false);
+        tabbedPane.setEnabledAt(4, false);
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -1102,6 +1150,8 @@ public class Client extends javax.swing.JFrame {
     private javax.swing.JTextField passwordInput;
     private javax.swing.JLabel passwordLabel;
     private javax.swing.JButton removeExpiredButton;
+    private javax.swing.JLabel restCurrentUserRoleStatus;
+    private javax.swing.JLabel restLoginStatus;
     private javax.swing.JLabel restarauntLabel1;
     private javax.swing.JPanel restaurantLoginPanel;
     private javax.swing.JPanel restaurantPanel;
