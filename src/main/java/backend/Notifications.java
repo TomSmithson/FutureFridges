@@ -37,7 +37,36 @@ public class Notifications {
         DateTimeFormatter df = new DateTimeFormatterBuilder().parseCaseInsensitive().appendPattern("dd/MM/yy").toFormatter();
         String date = df.format(LocalDate.now());
         sb.append(date);
-        Document m = new Document("notificationType", "Missing Item").append("notificationString", sb.toString());
+        Document m = new Document("notificationType", "Missing Item").append("date", date).append("notificationString", sb.toString());
+        InsertOneResult result = collection.insertOne(m);
+    }
+    
+    public void insertDeletedItemNotification(HashMap<String, String> removed) {
+        collection = handler.connectToNotifications();
+        StringBuilder sb = new StringBuilder();
+        sb.append("Removed ");
+        sb.append(removed.get("qty"));
+        sb.append(" ");
+        sb.append(removed.get("name"));
+        sb.append(" from the fridge due to expiry");
+        DateTimeFormatter df = new DateTimeFormatterBuilder().parseCaseInsensitive().appendPattern("dd/MM/yy").toFormatter();
+        String date = df.format(LocalDate.now());
+        Document m = new Document("notificationType", "Expiry").append("date", date).append("notificationString", sb.toString());
+        InsertOneResult result = collection.insertOne(m);
+    }
+    
+    public void insertInsertionItemNotification(HashMap<String, String> inserted) {
+        collection = handler.connectToNotifications();
+        StringBuilder sb = new StringBuilder();
+        sb.append("Inserted ");
+        sb.append(inserted.get("qty"));
+        sb.append(" ");
+        sb.append(inserted.get("name"));
+        sb.append(" into the fridge on the ");
+        DateTimeFormatter df = new DateTimeFormatterBuilder().parseCaseInsensitive().appendPattern("dd/MM/yy").toFormatter();
+        String date = df.format(LocalDate.now());
+        sb.append(date);
+        Document m = new Document("notificationType", "Insertion").append("date", date).append("notificationString", sb.toString());
         InsertOneResult result = collection.insertOne(m);
     }
     
@@ -47,6 +76,7 @@ public class Notifications {
         collection.find().forEach(doc -> {
             HashMap<String, String> a = new HashMap<>();
             a.put("notificationType", doc.get("notificationType").toString());
+            a.put("date", doc.get("date").toString());
             a.put("notificationString", doc.get("notificationString").toString());
             results.add(a);
         });

@@ -16,12 +16,14 @@ import com.mongodb.client.MongoCollection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import backend.DatabaseHandler;
+import com.mongodb.client.model.Filters;
 import com.mongodb.client.result.InsertOneResult;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import static java.time.temporal.ChronoUnit.DAYS;
+import org.bson.conversions.Bson;
 
 public class Inventory {
     
@@ -71,9 +73,25 @@ public class Inventory {
     
     public void insertItem(HashMap<String, String> item) {
         collection = handler.connectToInventory();
-        DateTimeFormatter df = new DateTimeFormatterBuilder().parseCaseInsensitive().appendPattern("dd/MM/yy").toFormatter();
-        String date = df.format(LocalDate.now()).toString();
-        Document i = new Document("name", item.get("name")).append("qty", item.get("qty")).append("date", date);
+//        DateTimeFormatter df = new DateTimeFormatterBuilder().parseCaseInsensitive().appendPattern("dd/MM/yy").toFormatter();
+//        String date = df.format(LocalDate.now()).toString();
+        System.out.println(item.toString());
+        Document i = new Document("name", item.get("name")).append("qty", item.get("qty")).append("date", item.get("expiryDate"));
         InsertOneResult result = collection.insertOne(i);   
+    }
+    
+    public ArrayList<HashMap<String, String>> removeExpiredItems() {
+        collection = handler.connectToInventory();
+        ArrayList<HashMap<String, String>> removed = new ArrayList<>();
+        ArrayList<HashMap<String, String>> results = getAllInventory();
+        for (int i = 0; i < results.size(); i++) {
+            HashMap<String, String> a = results.get(i);
+            if (Integer.parseInt(a.get("expiryDays")) <= 0) {
+                Bson filter = Filters.and(Filters.eq("name", a.get("name")), Filters.eq("date", a.get("date")));
+                collection.deleteMany(filter);
+                removed.add(a);
+            }
+        }
+        return removed;
     }
 }

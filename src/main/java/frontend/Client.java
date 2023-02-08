@@ -94,11 +94,14 @@ public class Client extends javax.swing.JFrame {
         doorStatusPanel = new javax.swing.JPanel();
         backButton = new javax.swing.JButton();
         doorStatusLabel = new javax.swing.JLabel();
+        doorLockButton = new javax.swing.JButton();
+        doorUnlockButton = new javax.swing.JButton();
         inventoryPanel = new javax.swing.JPanel();
         backButton2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         inventoryTable = new javax.swing.JTable();
         updateInventoryButton = new javax.swing.JButton();
+        removeExpiredButton = new javax.swing.JButton();
         employeePanel = new javax.swing.JPanel();
         backButton3 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -127,6 +130,7 @@ public class Client extends javax.swing.JFrame {
         itemsToInsertTable = new javax.swing.JTable();
         submitDeliveryButton = new javax.swing.JButton();
         updateItemsToInsertButton = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
 
         jMenu1.setText("jMenu1");
 
@@ -180,7 +184,7 @@ public class Client extends javax.swing.JFrame {
                 .addComponent(restaurantStaffButton, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29)
                 .addComponent(deliveryStaffButton, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(266, Short.MAX_VALUE))
+                .addContainerGap(290, Short.MAX_VALUE))
         );
 
         tabbedPane.addTab("User Selection", userSelectionPanel);
@@ -234,7 +238,7 @@ public class Client extends javax.swing.JFrame {
                     .addComponent(passwordInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(loginButton)
-                .addContainerGap(393, Short.MAX_VALUE))
+                .addContainerGap(417, Short.MAX_VALUE))
         );
 
         tabbedPane.addTab("Restaurant Login", restaurantLoginPanel);
@@ -276,7 +280,7 @@ public class Client extends javax.swing.JFrame {
                 .addComponent(authCodeInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(authCodeButton)
-                .addContainerGap(423, Short.MAX_VALUE))
+                .addContainerGap(428, Short.MAX_VALUE))
         );
 
         tabbedPane.addTab("Delivery Login", deliveryLoginPanel);
@@ -341,7 +345,7 @@ public class Client extends javax.swing.JFrame {
                     .addComponent(inventoryButton1)
                     .addComponent(employeeButton1)
                     .addComponent(notificationButton1))
-                .addContainerGap(406, Short.MAX_VALUE))
+                .addContainerGap(430, Short.MAX_VALUE))
         );
 
         restaurantTabs.addTab("Home", home);
@@ -355,25 +359,49 @@ public class Client extends javax.swing.JFrame {
 
         doorStatusLabel.setText("The door is currently: ");
 
+        doorLockButton.setText("Lock");
+        doorLockButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                doorLockButtonActionPerformed(evt);
+            }
+        });
+
+        doorUnlockButton.setText("Unlock");
+        doorUnlockButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                doorUnlockButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout doorStatusPanelLayout = new javax.swing.GroupLayout(doorStatusPanel);
         doorStatusPanel.setLayout(doorStatusPanelLayout);
         doorStatusPanelLayout.setHorizontalGroup(
             doorStatusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, doorStatusPanelLayout.createSequentialGroup()
-                .addContainerGap(721, Short.MAX_VALUE)
-                .addComponent(backButton)
-                .addContainerGap())
             .addGroup(doorStatusPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(doorStatusLabel)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(doorStatusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, doorStatusPanelLayout.createSequentialGroup()
+                        .addGap(0, 709, Short.MAX_VALUE)
+                        .addComponent(backButton))
+                    .addGroup(doorStatusPanelLayout.createSequentialGroup()
+                        .addGroup(doorStatusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(doorStatusLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(doorLockButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(doorUnlockButton, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         doorStatusPanelLayout.setVerticalGroup(
             doorStatusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, doorStatusPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(doorStatusLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 430, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(doorStatusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(doorLockButton)
+                    .addComponent(doorUnlockButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 403, Short.MAX_VALUE)
                 .addComponent(backButton)
                 .addContainerGap())
         );
@@ -419,6 +447,13 @@ public class Client extends javax.swing.JFrame {
             }
         });
 
+        removeExpiredButton.setText("Remove Expired Items");
+        removeExpiredButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeExpiredButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout inventoryPanelLayout = new javax.swing.GroupLayout(inventoryPanel);
         inventoryPanel.setLayout(inventoryPanelLayout);
         inventoryPanelLayout.setHorizontalGroup(
@@ -429,9 +464,10 @@ public class Client extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, inventoryPanelLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(inventoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(inventoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(backButton2, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(updateInventoryButton, javax.swing.GroupLayout.Alignment.TRAILING))))
+                            .addComponent(removeExpiredButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
+                            .addComponent(updateInventoryButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         inventoryPanelLayout.setVerticalGroup(
@@ -439,11 +475,13 @@ public class Client extends javax.swing.JFrame {
             .addGroup(inventoryPanelLayout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(updateInventoryButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(removeExpiredButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(backButton2)
-                .addContainerGap())
+                .addGap(7, 7, 7))
         );
 
         restaurantTabs.addTab("Inventory", inventoryPanel);
@@ -502,7 +540,7 @@ public class Client extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(updateEmployeeButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
                 .addComponent(backButton3)
                 .addContainerGap())
         );
@@ -521,11 +559,11 @@ public class Client extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Notification Type", "Notification"
+                "Notification Type", "Date", "Notification"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -561,7 +599,7 @@ public class Client extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, notificationsPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addComponent(updateNotificationsButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(backButton1))
@@ -646,7 +684,7 @@ public class Client extends javax.swing.JFrame {
                     .addGroup(headChefPanelLayout.createSequentialGroup()
                         .addGap(34, 34, 34)
                         .addComponent(createNewUserButton)))
-                .addContainerGap(305, Short.MAX_VALUE))
+                .addContainerGap(310, Short.MAX_VALUE))
         );
 
         restaurantTabs.addTab("Head Chef Admin", headChefPanel);
@@ -677,7 +715,7 @@ public class Client extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Name", "Quantity", "Inserted"
+                "Name", "Quantity", "Inserted", "Expiry Date"
             }
         ));
         itemsToInsertTable.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
@@ -701,6 +739,8 @@ public class Client extends javax.swing.JFrame {
             }
         });
 
+        jLabel6.setText("Please write 'y' in the inserted column and put the expiry date (dd/MM/yy) in the expiry date column for each inserted item");
+
         javax.swing.GroupLayout itemsToInsertPanelLayout = new javax.swing.GroupLayout(itemsToInsertPanel);
         itemsToInsertPanel.setLayout(itemsToInsertPanelLayout);
         itemsToInsertPanelLayout.setHorizontalGroup(
@@ -713,19 +753,23 @@ public class Client extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(itemsToInsertPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(submitDeliveryButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(updateItemsToInsertButton, javax.swing.GroupLayout.Alignment.TRAILING))))
+                            .addComponent(updateItemsToInsertButton, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addGroup(itemsToInsertPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         itemsToInsertPanelLayout.setVerticalGroup(
             itemsToInsertPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(itemsToInsertPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel6)
                 .addGap(18, 18, 18)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(updateItemsToInsertButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                .addComponent(submitDeliveryButton)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(submitDeliveryButton))
         );
 
         deliveryTabbedPane.addTab("Items to Insert", itemsToInsertPanel);
@@ -907,21 +951,21 @@ public class Client extends javax.swing.JFrame {
             a.put("name", deliveryItemsModel.getValueAt(i, 0).toString());
             a.put("qty", deliveryItemsModel.getValueAt(i, 1).toString());
             a.put("status", deliveryItemsModel.getValueAt(i, 2).toString());
+            a.put("expiryDate", deliveryItemsModel.getValueAt(i, 3).toString());
             deliveryTableData.add(a);
         }
                
         ArrayList<HashMap<String, String>> r = del.checkInsertedItems(deliveryTableData);
         ArrayList<HashMap<String, String>> n = del.checkMissingItems(deliveryTableData);
-        // Update the inventory with the items in r
         
+        // Update the inventory with the items in r
         for (int i = 0; i < r.size(); i++) {
-            System.out.println(r.get(i));
             inv.insertItem(r.get(i));
+            not.insertInsertionItemNotification(r.get(i));
         }
         
         // Add missing items to the chef's notifcation sheet
         for (int i = 0; i < n.size(); i++) {
-            System.out.println(n.get(i));
             not.insertMissingItemNotification(n.get(i));
         }
     }//GEN-LAST:event_submitDeliveryButtonActionPerformed
@@ -932,7 +976,7 @@ public class Client extends javax.swing.JFrame {
         ArrayList<HashMap<String, String>> itemsToInsert = inv.getItemsToBeInserted();
         for (int i = 0; i < itemsToInsert.size(); i++) {
             HashMap<String, String> c = itemsToInsert.get(i);
-            deliveryItemsModel.addRow(new Object[]{c.get("name").toString(), c.get("qty").toString(), c.get("status")});
+            deliveryItemsModel.addRow(new Object[]{c.get("name").toString(), c.get("qty").toString(), c.get("status"), "n/a"});
         }
     }//GEN-LAST:event_updateItemsToInsertButtonActionPerformed
 
@@ -944,12 +988,32 @@ public class Client extends javax.swing.JFrame {
             HashMap<String, String> c = n.get(i);
             System.out.println(c.get("notificationType"));
             System.out.println(c.get("notificationString"));
-            notificationModel.addRow(new Object[]{c.get("notificationType"), c.get("notificationString")});
+            notificationModel.addRow(new Object[]{c.get("notificationType"), c.get("date"), c.get("notificationString")});
         }
     }//GEN-LAST:event_updateNotificationsButtonActionPerformed
 
     private void itemsToInsertTablePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_itemsToInsertTablePropertyChange
     }//GEN-LAST:event_itemsToInsertTablePropertyChange
+
+    private void removeExpiredButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeExpiredButtonActionPerformed
+        // TODO add your handling code here:
+        ArrayList<HashMap<String, String>> removedItems = inv.removeExpiredItems();
+        for (int i = 0; i < removedItems.size(); i++) {
+            not.insertDeletedItemNotification(removedItems.get(i));
+        }
+    }//GEN-LAST:event_removeExpiredButtonActionPerformed
+
+    private void doorLockButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doorLockButtonActionPerformed
+        // TODO add your handling code here:
+        // If a head chef pressed the button, then allow
+        doorStatusLabel.setText("The door is currently: locked");
+    }//GEN-LAST:event_doorLockButtonActionPerformed
+
+    private void doorUnlockButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doorUnlockButtonActionPerformed
+        // TODO add your handling code here:
+        // If a head chef pressed the button, then allow
+        doorStatusLabel.setText("The door is currently: unlocked");
+    }//GEN-LAST:event_doorUnlockButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1001,9 +1065,11 @@ public class Client extends javax.swing.JFrame {
     private javax.swing.JLabel deliveryLoginTitle;
     private javax.swing.JButton deliveryStaffButton;
     private javax.swing.JTabbedPane deliveryTabbedPane;
+    private javax.swing.JButton doorLockButton;
     private javax.swing.JButton doorStatusButton1;
     private javax.swing.JLabel doorStatusLabel;
     private javax.swing.JPanel doorStatusPanel;
+    private javax.swing.JButton doorUnlockButton;
     private javax.swing.JButton employeeButton1;
     private javax.swing.JPanel employeePanel;
     private javax.swing.JLabel haedChefAdminTitle;
@@ -1019,6 +1085,7 @@ public class Client extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
@@ -1034,6 +1101,7 @@ public class Client extends javax.swing.JFrame {
     private javax.swing.JPanel notificationsPanel;
     private javax.swing.JTextField passwordInput;
     private javax.swing.JLabel passwordLabel;
+    private javax.swing.JButton removeExpiredButton;
     private javax.swing.JLabel restarauntLabel1;
     private javax.swing.JPanel restaurantLoginPanel;
     private javax.swing.JPanel restaurantPanel;
