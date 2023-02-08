@@ -17,7 +17,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import backend.DatabaseHandler;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.InsertOneResult;
+import com.mongodb.client.result.UpdateResult;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -94,4 +96,21 @@ public class Inventory {
         }
         return removed;
     }
+    
+    public String takeItemFromFridge(String name, String qty) {
+        collection = handler.connectToInventory();
+        ArrayList<HashMap<String, String>> items = getAllInventory();
+        for (int i = 0; i < items.size(); i++) {
+            if (items.get(i).get("name").toString().equals(name) && Integer.parseInt(items.get(i).get("qty")) >= Integer.parseInt(qty)) {
+                int newQty = Integer.parseInt(items.get(i).get("qty")) - Integer.parseInt(qty);
+                Bson filter = Filters.eq("name", items.get(i).get("name"));
+                Bson update = Updates.set("qty", newQty);
+                UpdateResult result = collection.updateMany(filter, update);
+                return "Updated database";
+            }
+        }
+        return "Failed to update database";
+    }
+    
+    // Check that if an items quantity hits zero, more needs to be ordered
 }
