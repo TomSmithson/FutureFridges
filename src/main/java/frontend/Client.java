@@ -41,6 +41,8 @@ public class Client extends javax.swing.JFrame {
     
     int invTableSelectedRow = 0;
     
+    static int itemIdCount = 0;
+    
     
     public Client() {
         initComponents();
@@ -108,6 +110,15 @@ public class Client extends javax.swing.JFrame {
         qtyRemovedInput = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        insertPanel = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        newItemName = new javax.swing.JTextField();
+        newItemExpiryDate = new javax.swing.JTextField();
+        newItemQuantity = new javax.swing.JTextField();
+        newItemButton = new javax.swing.JButton();
         employeePanel = new javax.swing.JPanel();
         backButton3 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -129,6 +140,10 @@ public class Client extends javax.swing.JFrame {
         createNewUserStatus = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         newUserRoleInput = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        removeUserInput = new javax.swing.JTextField();
+        removeUserButton = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         deliveryTabbedPane = new javax.swing.JTabbedPane();
         itemsToInsertPanel = new javax.swing.JPanel();
@@ -419,7 +434,7 @@ public class Client extends javax.swing.JFrame {
                 .addGroup(doorStatusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(doorLockButton)
                     .addComponent(doorUnlockButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 403, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 405, Short.MAX_VALUE)
                 .addComponent(backButton)
                 .addContainerGap())
         );
@@ -552,6 +567,87 @@ public class Client extends javax.swing.JFrame {
 
         restaurantTabs.addTab("Inventory", inventoryPanel);
 
+        jLabel11.setText("Please enter the details of the item you are inserting into the fridge");
+
+        jLabel12.setText("Name:");
+
+        jLabel13.setText("Quantity:");
+
+        jLabel14.setText("Expiry Date:");
+
+        newItemName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newItemNameActionPerformed(evt);
+            }
+        });
+
+        newItemExpiryDate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newItemExpiryDateActionPerformed(evt);
+            }
+        });
+
+        newItemQuantity.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newItemQuantityActionPerformed(evt);
+            }
+        });
+
+        newItemButton.setText("Submit");
+        newItemButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newItemButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout insertPanelLayout = new javax.swing.GroupLayout(insertPanel);
+        insertPanel.setLayout(insertPanelLayout);
+        insertPanelLayout.setHorizontalGroup(
+            insertPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(insertPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(insertPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(insertPanelLayout.createSequentialGroup()
+                        .addGroup(insertPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel12)
+                            .addComponent(jLabel13))
+                        .addGap(32, 32, 32)
+                        .addGroup(insertPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(newItemQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(newItemName, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(insertPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(newItemButton, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(insertPanelLayout.createSequentialGroup()
+                            .addComponent(jLabel14)
+                            .addGap(18, 18, 18)
+                            .addComponent(newItemExpiryDate, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(384, Short.MAX_VALUE))
+        );
+        insertPanelLayout.setVerticalGroup(
+            insertPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(insertPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel11)
+                .addGap(18, 18, 18)
+                .addGroup(insertPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(newItemName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(insertPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(newItemQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(insertPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel14)
+                    .addComponent(newItemExpiryDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(newItemButton)
+                .addContainerGap(336, Short.MAX_VALUE))
+        );
+
+        restaurantTabs.addTab("Insert", insertPanel);
+
         backButton3.setText("Back");
         backButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -606,7 +702,7 @@ public class Client extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(updateEmployeeButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
                 .addComponent(backButton3)
                 .addContainerGap())
         );
@@ -665,7 +761,7 @@ public class Client extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, notificationsPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addComponent(updateNotificationsButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(backButton1))
@@ -697,31 +793,52 @@ public class Client extends javax.swing.JFrame {
             }
         });
 
+        jLabel9.setText("Remove User");
+
+        jLabel10.setText("Username: ");
+
+        removeUserButton.setText("Remove User");
+        removeUserButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeUserButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout headChefPanelLayout = new javax.swing.GroupLayout(headChefPanel);
         headChefPanel.setLayout(headChefPanelLayout);
         headChefPanelLayout.setHorizontalGroup(
             headChefPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(headChefPanelLayout.createSequentialGroup()
                 .addGap(37, 37, 37)
-                .addGroup(headChefPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(headChefPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(removeUserButton)
                     .addGroup(headChefPanelLayout.createSequentialGroup()
-                        .addComponent(createNewUserStatus)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(createNewUserButton))
-                    .addGroup(headChefPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addComponent(newUserNameInput, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(createNewUserLabel)
-                    .addComponent(haedChefAdminTitle)
-                    .addGroup(headChefPanelLayout.createSequentialGroup()
+                        .addGroup(headChefPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(headChefPanelLayout.createSequentialGroup()
+                                .addComponent(createNewUserStatus)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(createNewUserButton))
+                            .addGroup(headChefPanelLayout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(18, 18, 18)
+                                .addComponent(newUserNameInput, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(createNewUserLabel)
+                            .addComponent(haedChefAdminTitle)
+                            .addGroup(headChefPanelLayout.createSequentialGroup()
+                                .addGroup(headChefPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4))
+                                .addGap(18, 18, 18)
+                                .addGroup(headChefPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(newUserPasswordInput)
+                                    .addComponent(newUserRoleInput))))
+                        .addGap(94, 94, 94)
                         .addGroup(headChefPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4))
-                        .addGap(18, 18, 18)
-                        .addGroup(headChefPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(newUserPasswordInput)
-                            .addComponent(newUserRoleInput))))
+                            .addComponent(jLabel9)
+                            .addGroup(headChefPanelLayout.createSequentialGroup()
+                                .addComponent(jLabel10)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(removeUserInput, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         headChefPanelLayout.setVerticalGroup(
@@ -730,15 +847,20 @@ public class Client extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(haedChefAdminTitle)
                 .addGap(18, 18, 18)
-                .addComponent(createNewUserLabel)
+                .addGroup(headChefPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(createNewUserLabel)
+                    .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(headChefPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(newUserNameInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(newUserNameInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10)
+                    .addComponent(removeUserInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(headChefPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(newUserPasswordInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(newUserPasswordInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(removeUserButton))
                 .addGroup(headChefPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(headChefPanelLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1010,10 +1132,12 @@ public class Client extends javax.swing.JFrame {
         ArrayList<HashMap<String, String>> deliveryTableData = new ArrayList<>();
         for (int i = 0; i < deliveryItemsModel.getRowCount(); i++) {
             HashMap<String, String> a = new HashMap<>();
+            a.put("id", String.valueOf(itemIdCount));
             a.put("name", deliveryItemsModel.getValueAt(i, 0).toString());
             a.put("qty", deliveryItemsModel.getValueAt(i, 1).toString());
             a.put("status", deliveryItemsModel.getValueAt(i, 2).toString());
             a.put("expiryDate", deliveryItemsModel.getValueAt(i, 3).toString());
+            itemIdCount++;
             deliveryTableData.add(a);
         }
                
@@ -1087,6 +1211,7 @@ public class Client extends javax.swing.JFrame {
         String qtyRemoved = qtyRemovedInput.getText();
         // Check against the databsae to make sure their is enough in the fridge to remove
         String result = inv.takeItemFromFridge(name, qtyRemoved);
+        not.itemTakenFromFridgeNotification(name, qtyRemoved);
         System.out.println(result);
     }//GEN-LAST:event_takingItemFromFridgeButtonActionPerformed
 
@@ -1095,6 +1220,43 @@ public class Client extends javax.swing.JFrame {
         invTableSelectedRow = inventoryTable.getSelectedRow();
         
     }//GEN-LAST:event_inventoryTableMousePressed
+
+    private void removeUserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeUserButtonActionPerformed
+        // TODO add your handling code here:
+        String username = removeUserInput.getText();
+        not.userRemovedNotification(username);
+        usr.removeUser(username);
+    }//GEN-LAST:event_removeUserButtonActionPerformed
+
+    private void newItemNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newItemNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_newItemNameActionPerformed
+
+    private void newItemExpiryDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newItemExpiryDateActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_newItemExpiryDateActionPerformed
+
+    private void newItemQuantityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newItemQuantityActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_newItemQuantityActionPerformed
+
+    private void newItemButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newItemButtonActionPerformed
+        // TODO add your handling code here:
+        String name = newItemName.getText();
+        String qty = newItemQuantity.getText();
+        String expiry = newItemExpiryDate.getText();
+        
+        System.out.println(expiry);
+        
+        HashMap<String, String> i = new HashMap<>();
+        i.put("name", name);
+        i.put("qty", qty);
+        i.put("expiryDate", expiry);
+        
+        inv.insertItem(i);
+        
+        not.insertInsertionItemNotification(i);
+    }//GEN-LAST:event_newItemButtonActionPerformed
 
     private void setHeadChefUi() {
         System.out.println("Head Chef UI");
@@ -1196,12 +1358,18 @@ public class Client extends javax.swing.JFrame {
     private javax.swing.JLabel haedChefAdminTitle;
     private javax.swing.JPanel headChefPanel;
     private javax.swing.JPanel home;
+    private javax.swing.JPanel insertPanel;
     private javax.swing.JButton inventoryButton1;
     private javax.swing.JPanel inventoryPanel;
     private javax.swing.JTable inventoryTable;
     private javax.swing.JPanel itemsToInsertPanel;
     private javax.swing.JTable itemsToInsertTable;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1209,6 +1377,7 @@ public class Client extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
@@ -1216,6 +1385,10 @@ public class Client extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JButton loginButton;
+    private javax.swing.JButton newItemButton;
+    private javax.swing.JTextField newItemExpiryDate;
+    private javax.swing.JTextField newItemName;
+    private javax.swing.JTextField newItemQuantity;
     private javax.swing.JTextField newUserNameInput;
     private javax.swing.JTextField newUserPasswordInput;
     private javax.swing.JTextField newUserRoleInput;
@@ -1226,6 +1399,8 @@ public class Client extends javax.swing.JFrame {
     private javax.swing.JLabel passwordLabel;
     private javax.swing.JTextField qtyRemovedInput;
     private javax.swing.JButton removeExpiredButton;
+    private javax.swing.JButton removeUserButton;
+    private javax.swing.JTextField removeUserInput;
     private javax.swing.JLabel restCurrentUserRoleStatus;
     private javax.swing.JLabel restLoginStatus;
     private javax.swing.JLabel restarauntLabel1;

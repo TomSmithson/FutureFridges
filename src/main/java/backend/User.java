@@ -82,6 +82,12 @@ public class User {
         return "Successfully created a new user with id: " + result.getInsertedId().asObjectId().getValue();
     }
     
+    public void removeUser(String username) {
+        collection = handler.connectToUser();
+        Bson filter = Filters.eq("username", username);
+        collection.deleteOne(filter);
+    }
+    
     public ArrayList<HashMap<String, String>> getAllUsers() {
         ArrayList<HashMap<String, String>> results = new ArrayList<>();
         collection = handler.connectToUser();

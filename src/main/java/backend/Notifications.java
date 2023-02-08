@@ -83,6 +83,23 @@ public class Notifications {
         return results;
     }
     
+    public void itemTakenFromFridgeNotification(String name, String qty) {
+        collection = handler.connectToNotifications();
+        StringBuilder sb = new StringBuilder();
+        sb.append(qty);
+        sb.append(" ");
+        sb.append(name);
+        sb.append(" has been taken out from the fridge");
+        DateTimeFormatter df = new DateTimeFormatterBuilder().parseCaseInsensitive().appendPattern("dd/MM/yy").toFormatter();
+        String date = df.format(LocalDate.now());
+        Document m = new Document("notificationType", "Chef Removal").append("date", date).append("notificationString", sb.toString());
+        InsertOneResult result = collection.insertOne(m);
+    }
+    
+    public void userRemovedNotification(String username) {
+        collection = handler.connectToNotifications();
+    }
+    
 }
 
     

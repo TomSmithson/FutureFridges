@@ -53,8 +53,13 @@ public class Inventory {
             long days = DAYS.between(now, date);
            
             a.put("expiryDays", Long.toString(days));
-           
-            results.add(a);
+            
+            if (Integer.parseInt(doc.get("qty").toString()) > 0) {
+                results.add(a);
+            } else {
+                Bson filter = Filters.eq("name", doc.get("name").toString());
+                collection.deleteMany(filter);
+            }
         });
         
         return results;
