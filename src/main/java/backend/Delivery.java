@@ -49,5 +49,26 @@ public class Delivery {
             InsertOneResult result = collection.insertOne(c);
         }
     }
-
+    
+    public ArrayList<HashMap<String, String>> checkInsertedItems(ArrayList<HashMap<String, String>> itemsToBeInserted) {
+        ArrayList<HashMap<String, String>> results = new ArrayList<>();
+        for (int i = 0; i < itemsToBeInserted.size(); i++) {
+            HashMap<String, String> c = itemsToBeInserted.get(i);
+            if (c.get("status").equals("y")) {
+                results.add(c);
+            }
+        }
+        return results;
+    }
+    
+    public ArrayList<HashMap<String, String>> checkMissingItems(ArrayList<HashMap<String, String>> itemsToBeInserted) {
+        ArrayList<HashMap<String, String>> results = new ArrayList<>();
+        for (int i = 0; i < itemsToBeInserted.size(); i++) {
+            HashMap<String, String> c = itemsToBeInserted.get(i);
+            if (c.get("status").equals("n")) {
+                results.add(c);
+            }
+        }
+        return results;
+    }
 }

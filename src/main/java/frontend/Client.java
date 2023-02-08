@@ -7,10 +7,12 @@ package frontend;
 
 import java.util.ArrayList;
 import backend.Inventory;
-import backend.Employee;
 import backend.User;
 import backend.Delivery;
+import backend.Notifications;
+import java.awt.Point;
 import java.util.HashMap;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -24,12 +26,15 @@ public class Client extends javax.swing.JFrame {
      */
     
     Inventory inv = null;
-    Employee emp  = null;
     Delivery del = null;
     User usr = null;
+    Notifications not = null;
     
     DefaultTableModel inventoryModel;
-    DefaultTableModel employeeModel;
+    DefaultTableModel userModel;
+    DefaultTableModel deliveryItemsModel;
+    DefaultTableModel notificationModel;
+    
     
     String currentUser = "";
     
@@ -39,10 +44,12 @@ public class Client extends javax.swing.JFrame {
 //        handler = new Handler();
         inv = new Inventory();
         inventoryModel = (DefaultTableModel) inventoryTable.getModel();
-        emp = new Employee();
-        employeeModel = (DefaultTableModel) employeeTable.getModel();
         usr = new User();
+        userModel = (DefaultTableModel) userTable.getModel();
         del = new Delivery();
+        deliveryItemsModel = (DefaultTableModel) itemsToInsertTable.getModel();
+        not = new Notifications();
+        notificationModel = (DefaultTableModel) notificationTable.getModel();
         
         doorStatusLabel.setText("The door is currently: closed");
         
@@ -95,10 +102,13 @@ public class Client extends javax.swing.JFrame {
         employeePanel = new javax.swing.JPanel();
         backButton3 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        employeeTable = new javax.swing.JTable();
+        userTable = new javax.swing.JTable();
         updateEmployeeButton = new javax.swing.JButton();
         notificationsPanel = new javax.swing.JPanel();
         backButton1 = new javax.swing.JButton();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        notificationTable = new javax.swing.JTable();
+        updateNotificationsButton = new javax.swing.JButton();
         headChefPanel = new javax.swing.JPanel();
         haedChefAdminTitle = new javax.swing.JLabel();
         createNewUserLabel = new javax.swing.JLabel();
@@ -116,6 +126,7 @@ public class Client extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         itemsToInsertTable = new javax.swing.JTable();
         submitDeliveryButton = new javax.swing.JButton();
+        updateItemsToInsertButton = new javax.swing.JButton();
 
         jMenu1.setText("jMenu1");
 
@@ -287,7 +298,7 @@ public class Client extends javax.swing.JFrame {
             }
         });
 
-        employeeButton1.setText("Employees");
+        employeeButton1.setText("Users");
         employeeButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 employeeButton1ActionPerformed(evt);
@@ -317,7 +328,7 @@ public class Client extends javax.swing.JFrame {
                 .addComponent(employeeButton1)
                 .addGap(58, 58, 58)
                 .addComponent(notificationButton1)
-                .addContainerGap(112, Short.MAX_VALUE))
+                .addContainerGap(206, Short.MAX_VALUE))
         );
         homeLayout.setVerticalGroup(
             homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -444,7 +455,7 @@ public class Client extends javax.swing.JFrame {
             }
         });
 
-        employeeTable.setModel(new javax.swing.table.DefaultTableModel(
+        userTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -460,7 +471,7 @@ public class Client extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(employeeTable);
+        jScrollPane2.setViewportView(userTable);
 
         updateEmployeeButton.setText("Update");
         updateEmployeeButton.addActionListener(new java.awt.event.ActionListener() {
@@ -505,21 +516,55 @@ public class Client extends javax.swing.JFrame {
             }
         });
 
+        notificationTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Notification Type", "Notification"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane4.setViewportView(notificationTable);
+
+        updateNotificationsButton.setText("Update Notifications");
+        updateNotificationsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateNotificationsButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout notificationsPanelLayout = new javax.swing.GroupLayout(notificationsPanel);
         notificationsPanel.setLayout(notificationsPanelLayout);
         notificationsPanelLayout.setHorizontalGroup(
             notificationsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, notificationsPanelLayout.createSequentialGroup()
-                .addContainerGap(712, Short.MAX_VALUE)
-                .addComponent(backButton1)
+            .addGroup(notificationsPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(notificationsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, notificationsPanelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(notificationsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(backButton1, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(updateNotificationsButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         notificationsPanelLayout.setVerticalGroup(
             notificationsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, notificationsPanelLayout.createSequentialGroup()
-                .addContainerGap(440, Short.MAX_VALUE)
-                .addComponent(backButton1)
-                .addContainerGap())
+                .addContainerGap()
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addComponent(updateNotificationsButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(backButton1))
         );
 
         restaurantTabs.addTab("Notifications", notificationsPanel);
@@ -635,12 +680,24 @@ public class Client extends javax.swing.JFrame {
                 "Name", "Quantity", "Inserted"
             }
         ));
+        itemsToInsertTable.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                itemsToInsertTablePropertyChange(evt);
+            }
+        });
         jScrollPane3.setViewportView(itemsToInsertTable);
 
         submitDeliveryButton.setText("Submit Delivery");
         submitDeliveryButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 submitDeliveryButtonActionPerformed(evt);
+            }
+        });
+
+        updateItemsToInsertButton.setText("Update");
+        updateItemsToInsertButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateItemsToInsertButtonActionPerformed(evt);
             }
         });
 
@@ -652,9 +709,11 @@ public class Client extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(itemsToInsertPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 784, Short.MAX_VALUE)
-                    .addGroup(itemsToInsertPanelLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, itemsToInsertPanelLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(submitDeliveryButton, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(itemsToInsertPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(submitDeliveryButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(updateItemsToInsertButton, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addContainerGap())
         );
         itemsToInsertPanelLayout.setVerticalGroup(
@@ -663,8 +722,10 @@ public class Client extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addComponent(updateItemsToInsertButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addComponent(submitDeliveryButton)
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         deliveryTabbedPane.addTab("Items to Insert", itemsToInsertPanel);
@@ -675,14 +736,14 @@ public class Client extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(deliveryTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 813, Short.MAX_VALUE)
+                .addComponent(deliveryTabbedPane)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(deliveryTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 527, Short.MAX_VALUE)
+                .addComponent(deliveryTabbedPane)
                 .addContainerGap())
         );
 
@@ -794,11 +855,11 @@ public class Client extends javax.swing.JFrame {
 
     private void updateEmployeeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateEmployeeButtonActionPerformed
         // TODO add your handling code here:
-        employeeModel.setRowCount(0);
+        userModel.setRowCount(0);
         ArrayList<HashMap<String, String>> data = usr.getAllUsers();
         for (int i = 0; i < data.size(); i++) {
             HashMap<String, String> c = data.get(i);
-            employeeModel.addRow(new Object[]{i, c.get("name"), c.get("role"), c.get("date")});
+            userModel.addRow(new Object[]{i, c.get("name"), c.get("role"), c.get("date")});
         }
     }//GEN-LAST:event_updateEmployeeButtonActionPerformed
 
@@ -840,12 +901,55 @@ public class Client extends javax.swing.JFrame {
     private void submitDeliveryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitDeliveryButtonActionPerformed
         // TODO add your handling code here:
         
-        // Iterate through each item in the table and check that the column has a y it in that the item has been inserted.
+        ArrayList<HashMap<String, String>> deliveryTableData = new ArrayList<>();
+        for (int i = 0; i < deliveryItemsModel.getRowCount(); i++) {
+            HashMap<String, String> a = new HashMap<>();
+            a.put("name", deliveryItemsModel.getValueAt(i, 0).toString());
+            a.put("qty", deliveryItemsModel.getValueAt(i, 1).toString());
+            a.put("status", deliveryItemsModel.getValueAt(i, 2).toString());
+            deliveryTableData.add(a);
+        }
+               
+        ArrayList<HashMap<String, String>> r = del.checkInsertedItems(deliveryTableData);
+        ArrayList<HashMap<String, String>> n = del.checkMissingItems(deliveryTableData);
+        // Update the inventory with the items in r
         
-        // If not add it to the chefs notifications
+        for (int i = 0; i < r.size(); i++) {
+            System.out.println(r.get(i));
+            inv.insertItem(r.get(i));
+        }
         
-        
+        // Add missing items to the chef's notifcation sheet
+        for (int i = 0; i < n.size(); i++) {
+            System.out.println(n.get(i));
+            not.insertMissingItemNotification(n.get(i));
+        }
     }//GEN-LAST:event_submitDeliveryButtonActionPerformed
+
+    private void updateItemsToInsertButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateItemsToInsertButtonActionPerformed
+        // TODO add your handling code here:
+        deliveryItemsModel.setRowCount(0);
+        ArrayList<HashMap<String, String>> itemsToInsert = inv.getItemsToBeInserted();
+        for (int i = 0; i < itemsToInsert.size(); i++) {
+            HashMap<String, String> c = itemsToInsert.get(i);
+            deliveryItemsModel.addRow(new Object[]{c.get("name").toString(), c.get("qty").toString(), c.get("status")});
+        }
+    }//GEN-LAST:event_updateItemsToInsertButtonActionPerformed
+
+    private void updateNotificationsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateNotificationsButtonActionPerformed
+        // TODO add your handling code here:
+        notificationModel.setRowCount(0);
+        ArrayList<HashMap<String, String>> n = not.getAllNotifications();
+        for (int i = 0; i < n.size(); i++) {
+            HashMap<String, String> c = n.get(i);
+            System.out.println(c.get("notificationType"));
+            System.out.println(c.get("notificationString"));
+            notificationModel.addRow(new Object[]{c.get("notificationType"), c.get("notificationString")});
+        }
+    }//GEN-LAST:event_updateNotificationsButtonActionPerformed
+
+    private void itemsToInsertTablePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_itemsToInsertTablePropertyChange
+    }//GEN-LAST:event_itemsToInsertTablePropertyChange
 
     /**
      * @param args the command line arguments
@@ -902,7 +1006,6 @@ public class Client extends javax.swing.JFrame {
     private javax.swing.JPanel doorStatusPanel;
     private javax.swing.JButton employeeButton1;
     private javax.swing.JPanel employeePanel;
-    private javax.swing.JTable employeeTable;
     private javax.swing.JLabel haedChefAdminTitle;
     private javax.swing.JPanel headChefPanel;
     private javax.swing.JPanel home;
@@ -921,11 +1024,13 @@ public class Client extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JButton loginButton;
     private javax.swing.JTextField newUserNameInput;
     private javax.swing.JTextField newUserPasswordInput;
     private javax.swing.JTextField newUserRoleInput;
     private javax.swing.JButton notificationButton1;
+    private javax.swing.JTable notificationTable;
     private javax.swing.JPanel notificationsPanel;
     private javax.swing.JTextField passwordInput;
     private javax.swing.JLabel passwordLabel;
@@ -938,9 +1043,12 @@ public class Client extends javax.swing.JFrame {
     private javax.swing.JTabbedPane tabbedPane;
     private javax.swing.JButton updateEmployeeButton;
     private javax.swing.JButton updateInventoryButton;
+    private javax.swing.JButton updateItemsToInsertButton;
+    private javax.swing.JButton updateNotificationsButton;
     private javax.swing.JLabel userSelectionInfo;
     private javax.swing.JPanel userSelectionPanel;
     private javax.swing.JLabel userSelectionTitle;
+    private javax.swing.JTable userTable;
     private javax.swing.JTextField usernameInput;
     private javax.swing.JLabel usernameLabel;
     // End of variables declaration//GEN-END:variables

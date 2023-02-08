@@ -71,4 +71,8 @@ public class DatabaseHandler {
     public MongoCollection<Document> connectToDelivery() {
         return database.getCollection("delivery");
     }
+    
+    public MongoCollection<Document> connectToNotifications() {
+        return database.getCollection("notifications");
+    }
 }
