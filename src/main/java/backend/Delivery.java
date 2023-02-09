@@ -18,6 +18,7 @@ import java.util.HashMap;
 import backend.DatabaseHandler;
 import com.mongodb.client.result.InsertOneResult;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class Delivery {
     DatabaseHandler handler = null;
@@ -48,6 +49,15 @@ public class Delivery {
             Document c = new Document("authCode", authCode);
             InsertOneResult result = collection.insertOne(c);
         }
+    }
+    
+    public String getAuthCode() {
+        AtomicReference wrapper = new AtomicReference<>("");
+        collection = handler.connectToDelivery();
+        collection.find().forEach(doc -> {
+            wrapper.set(doc.get("authCode"));
+        });
+        return wrapper.get().toString();
     }
     
     public ArrayList<HashMap<String, String>> checkInsertedItems(ArrayList<HashMap<String, String>> itemsToBeInserted) {

@@ -1111,18 +1111,15 @@ public class Client extends javax.swing.JFrame {
 
     private void authCodeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_authCodeButtonActionPerformed
         // TODO add your handling code here:
-        String authCode = authCodeInput.getText();
+        String authCodeInputText = authCodeInput.getText();
         
-        ArrayList<HashMap<String, String>> authCodeMap = del.getAllAuthCodes();
-        for (int i = 0; i < authCodeMap.size(); i++) {
-            HashMap<String, String> c = authCodeMap.get(i);
-            if (authCode.equals(c.get("authCode"))) {
-                System.out.println("Successfully authenticated as delivery personnel");
-                tabbedPane.setSelectedIndex(4);
-            }
+        String authCode = del.getAuthCode();
+        
+        if (authCode.equals(authCodeInputText)) {
+            tabbedPane.setSelectedIndex(4);
+            currentUserRole = "Delivery";
+            setDeliveryUi();
         }
-        currentUserRole = "Delivery";
-        setDeliveryUi();
         
     }//GEN-LAST:event_authCodeButtonActionPerformed
 
