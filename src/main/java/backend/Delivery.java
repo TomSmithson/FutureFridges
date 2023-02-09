@@ -26,30 +26,8 @@ public class Delivery {
     
     public Delivery() {
         handler = new DatabaseHandler();
-        generateRandomAuthCodes();
     }
     
-    public ArrayList<HashMap<String, String>> getAllAuthCodes() {
-        ArrayList<HashMap<String, String>> results = new ArrayList<>();
-        collection = handler.connectToDelivery();
-        collection.find().forEach(doc -> {
-            HashMap<String, String> a = new HashMap<>();
-            a.put("authCode", doc.get("authCode").toString());
-            results.add(a);
-        });
-        return results;
-    }
-    
-    public void generateRandomAuthCodes() {
-        collection = handler.connectToDelivery();
-        collection.deleteMany(new Document());
-        Random r = new Random();
-        for (int i = 0; i < 10; i++) {
-            int authCode = r.nextInt((9999 - 100) + 1) + 10;
-            Document c = new Document("authCode", authCode);
-            InsertOneResult result = collection.insertOne(c);
-        }
-    }
     
     public String getAuthCode() {
         AtomicReference wrapper = new AtomicReference<>("");
